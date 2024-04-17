@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TestDrivenDevelopmentApp.Core.Entities;
 using TestDrivenDevelopmentApp.Services;
 
@@ -17,6 +18,7 @@ namespace TestDrivenDevelopmentApp.Controllers
         }
 
         [HttpGet(Name = "GetAll")]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var entities = _service.GetAll();
