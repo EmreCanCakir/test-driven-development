@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
+using TestDrivenDevelopmentApp.Core.Services;
 using TestDrivenDevelopmentApp.DataAccess;
 using TestDrivenDevelopmentApp.Services;
 
@@ -40,6 +41,7 @@ void ConfigureServices(IServiceCollection services) {
     services.AddDbContext<MainDbContext>(options => options.UseSqlServer(connectionString));
     services.AddTransient<IBookService, BookService>();
     services.AddTransient<IBookDal, EfBookDal>();
+    services.AddSingleton<ITokenService, TokenService>();
 }
 
 void ConfigureSwagger()
