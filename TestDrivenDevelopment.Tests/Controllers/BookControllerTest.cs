@@ -1,9 +1,9 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TestDrivenDevelopmentApp.Services;
 using TestDrivenDevelopmentApp.Controllers;
 using TestDrivenDevelopmentApp.Model;
+using TestDrivenDevelopmentApp.Model.Dtos;
 
 namespace TestDrivenDevelopment.Tests.Controllers
 {
@@ -17,7 +17,7 @@ namespace TestDrivenDevelopment.Tests.Controllers
 
             var underTest = new BooksController(mockBookService.Object);
 
-            underTest.Should().BeAssignableTo<BaseController<Book, IBookService>>();
+            underTest.Should().BeAssignableTo<BaseController<BookDto, IBookService>>();
         }
     }
 }

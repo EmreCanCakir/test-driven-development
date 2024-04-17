@@ -1,13 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestDrivenDevelopmentApp.Controllers;
-using TestDrivenDevelopmentApp.Model;
+using TestDrivenDevelopmentApp.Model.Dtos;
 using TestDrivenDevelopmentApp.Services;
 
 namespace TestDrivenDevelopment.Tests.Controllers
@@ -21,12 +16,12 @@ namespace TestDrivenDevelopment.Tests.Controllers
             // Arrange
             var mockService = new Mock<IBookService>();
             mockService.Setup(x => x.GetAll())
-                .Returns(new List<Book>()
+                .Returns(new List<BookDto>()
                 {
-                    new Book { Title = "Book1", Author = "Author1", Year = 2020 },
+                    new BookDto { Title = "Book1", AuthorName = "Author1", Year = 2020 },
                 });
 
-            var underTest = new BaseController<Book, IBookService>(mockService.Object);
+            var underTest = new BaseController<BookDto, IBookService>(mockService.Object);
 
             // Act
             var result = (OkObjectResult)await underTest.GetAll();
@@ -40,12 +35,12 @@ namespace TestDrivenDevelopment.Tests.Controllers
         {
             var mockService = new Mock<IBookService>();
             mockService.Setup(x => x.GetAll())
-                .Returns(new List<Book>()
+                .Returns(new List<BookDto>()
                 {
-                    new Book { Title = "Book1", Author = "Author1", Year = 2020 },
+                    new BookDto { Title = "Book1", AuthorName = "Author1", Year = 2020 },
                 });
 
-            var underTest = new BaseController<Book, IBookService>(mockService.Object);
+            var underTest = new BaseController<BookDto, IBookService>(mockService.Object);
 
             var result = await underTest.GetAll();
 
@@ -57,16 +52,17 @@ namespace TestDrivenDevelopment.Tests.Controllers
         {
             var mockService = new Mock<IBookService>();
             mockService.Setup(x => x.GetAll())
-                .Returns(new List<Book>()
-                    { new Book { Title = "Book1", Author = "Author1", Year = 2020 }, }
-                );
+                .Returns(new List<BookDto>()
+                {
+                    new BookDto { Title = "Book1", AuthorName = "Author1", Year = 2020 },
+                });
 
-            var underTest = new BaseController<Book, IBookService>(mockService.Object);
+            var underTest = new BaseController<BookDto, IBookService>(mockService.Object);
             var result = await underTest.GetAll();
             var objectResult = (OkObjectResult)result;
 
             result.Should().BeOfType<OkObjectResult>();
-            objectResult.Value.Should().BeOfType<List<Book>>();
+            objectResult.Value.Should().BeOfType<List<BookDto>>();
         }
 
         [Fact]
@@ -74,9 +70,9 @@ namespace TestDrivenDevelopment.Tests.Controllers
         {
             var mockService = new Mock<IBookService>();
             mockService.Setup(x => x.GetAll())
-                .Returns(new List<Book>());
+                .Returns(new List<BookDto>());
 
-            var underTest = new BaseController<Book, IBookService>(mockService.Object);
+            var underTest = new BaseController<BookDto, IBookService>(mockService.Object);
             var result = await underTest.GetAll();
             var objectResult = (BadRequestResult)result;
 
@@ -85,20 +81,5 @@ namespace TestDrivenDevelopment.Tests.Controllers
         }
         #endregion
 
-        #region Add
-        [Fact]
-        public async Task Add_OnSuccess_ShouldReturns201()
-        {
-            var mockService = new Mock<IBookService>();
-            mockService.Setup(x => x.Add(It.IsAny<Book>()))
-                .Returns(new CreatedResult());
-
-            var underTest = new BaseController<Book, IBookService>(mockService.Object);
-            var result = (CreatedAtActionResult)await underTest.Add(new Book { Title = "Book1", Author = "Author1", Year = 2020 });
-
-            result.StatusCode.Should().Be(201);
-        }
-
-        #endregion
     }
 }

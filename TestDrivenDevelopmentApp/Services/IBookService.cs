@@ -1,8 +1,8 @@
-﻿using TestDrivenDevelopmentApp.Model;
+﻿using TestDrivenDevelopmentApp.Model.Dtos;
 
 namespace TestDrivenDevelopmentApp.Services
 {
-    public interface IBookService : IBaseService<Book>
+    public interface IBookService : IBaseService<BookDto>
     {
     }
 }

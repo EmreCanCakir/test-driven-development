@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TestDrivenDevelopmentApp.Model;
+using TestDrivenDevelopmentApp.Core.Entities;
 
 namespace TestDrivenDevelopmentApp.Services
 {
-    public interface IBaseService<T> where T : class, new()
+    public interface IBaseService<T> where T : class, IEntity, new()
     {
-        IActionResult Add(T entity);
         List<T> GetAll();
     }
 }

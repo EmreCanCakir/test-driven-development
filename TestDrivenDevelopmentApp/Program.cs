@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using TestDrivenDevelopmentApp.DataAccess;
 using TestDrivenDevelopmentApp.Services;
 
@@ -31,6 +32,7 @@ app.Run();
 
 void ConfigureServices(IServiceCollection services) {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    services.AddAutoMapper(Assembly.GetExecutingAssembly());
     services.AddDbContext<MainDbContext>(options => options.UseSqlServer(connectionString));
     services.AddTransient<IBookService, BookService>();
     services.AddTransient<IBookDal, EfBookDal>();
