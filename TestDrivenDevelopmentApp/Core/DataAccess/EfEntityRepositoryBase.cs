@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using TestDrivenDevelopmentApp.Core.Entities;
 
 namespace TestDrivenDevelopmentApp.Core.DataAccess
 {
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
-        where TEntity : class, new()
+        where TEntity : class, IEntity, new()
         where TContext : DbContext, new()
     {
         private readonly TContext _context;

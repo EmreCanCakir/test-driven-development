@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TestDrivenDevelopmentApp.Core.Entities;
 
 namespace TestDrivenDevelopmentApp.Model
 {
-    public class Book
+    public class Book: IEntity
     {
         [Key]
         public int Id { get; set; }
