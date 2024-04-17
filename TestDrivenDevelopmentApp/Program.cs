@@ -1,5 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using TestDrivenDevelopmentApp.DataAccess;
+using TestDrivenDevelopmentApp.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
+ConfigureServices(builder.Services);
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -23,3 +28,10 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void ConfigureServices(IServiceCollection services) {
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    services.AddDbContext<MainDbContext>(options => options.UseSqlServer(connectionString));
+    services.AddTransient<IBookService, BookService>();
+    services.AddTransient<IBookDal, EfBookDal>();
+}
