@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "testdrivendevelopmentapp",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
+      "useSSL": true,
+      "environmentVariables": {
+        "ConnectionStrings:DefaultConnection": "Server=sqlserver-db;Database=Test_Driven_Development;User=sa;Password=Password1"
+      },
+      "serviceActions": {
+        "testdrivendevelopmentapp": "StartDebugging"
+      }
+    }
+  }
+}

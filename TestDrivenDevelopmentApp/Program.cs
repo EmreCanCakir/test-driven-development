@@ -19,6 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 ConfigureSwagger();
 
 var app = builder.Build();
+app.Services.CreateScope().ServiceProvider.GetRequiredService<MainDbContext>().Database.Migrate();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

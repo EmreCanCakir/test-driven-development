@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  testdrivendevelopmentapp:
+    image: ${DOCKER_REGISTRY-}testdrivendevelopmentapp
+    build:
+      context: .
+      dockerfile: TestDrivenDevelopmentApp/Dockerfile
+    environment:
+      - "ConnectionStrings:DefaultConnection=Server=sqlserver-db;Database=Test_Driven_Development;User=sa;Password=YourStrong!Passw0rd"
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - db
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver-db
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: YourStrong!Passw0rd
+    ports:
+      - "1433:1433"
