@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDrivenDevelopment.Tests
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2C4E84F6-D28B-43BF-A730-81FF3F4DD43D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthManagement", "AuthManagement\AuthManagement.csproj", "{084FAE87-6BC8-4010-9BF6-E72E8F1DAD7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2C4E84F6-D28B-43BF-A730-81FF3F4DD43D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C4E84F6-D28B-43BF-A730-81FF3F4DD43D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C4E84F6-D28B-43BF-A730-81FF3F4DD43D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{084FAE87-6BC8-4010-9BF6-E72E8F1DAD7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{084FAE87-6BC8-4010-9BF6-E72E8F1DAD7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{084FAE87-6BC8-4010-9BF6-E72E8F1DAD7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{084FAE87-6BC8-4010-9BF6-E72E8F1DAD7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

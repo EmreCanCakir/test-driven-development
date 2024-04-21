@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using TestDrivenDevelopmentApp.Core.Services;
-using TestDrivenDevelopmentApp.Model.Dtos;
+using TestDrivenDevelopmentApp.Services;
 
 namespace TestDrivenDevelopmentApp.Controllers
 {
@@ -11,21 +7,18 @@ namespace TestDrivenDevelopmentApp.Controllers
     [Route("[controller]")]
     public class AuthController: ControllerBase
     {
-        private readonly ITokenService _tokenService;
-        public AuthController(ITokenService tokenService)
+        private readonly AuthClient _authClient;
+
+        public AuthController(AuthClient authClient)
         {
-            _tokenService = tokenService;   
+            _authClient = authClient;
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserLoginDto userLogin)
+        public async Task<IActionResult> Login([FromQuery] String userName, [FromQuery] String password)
         {
-            if (userLogin.UserName == "test" && userLogin.Password == "test")
-            {
-                var token = _tokenService.GenerateJwtToken();
-                return Ok(new { Token = token });
-            }
-            return Unauthorized("Invalid credentials");
+            var token = _authClient.Login(userName, password);
+            return Ok(new { Token = token });
         }
     }
 }

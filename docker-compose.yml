@@ -8,6 +8,7 @@ services:
       dockerfile: TestDrivenDevelopmentApp/Dockerfile
     environment:
       - "ConnectionStrings:DefaultConnection=Server=sqlserver-db;Database=Test_Driven_Development;User=sa;Password=YourStrong!Passw0rd"
+      - authmanagement_url=https://authmanagement:5001
     ports:
       - "8080:8080"
       - "8081:8081"
@@ -22,3 +23,12 @@ services:
       MSSQL_SA_PASSWORD: YourStrong!Passw0rd
     ports:
       - "1433:1433"
+
+  authmanagement:
+    image: ${DOCKER_REGISTRY-}authmanagement
+    build:
+      context: .
+      dockerfile: AuthManagement/Dockerfile
+    ports:
+      - "5000:5000"
+      - "5001:5001"

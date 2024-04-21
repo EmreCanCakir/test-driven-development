@@ -4,7 +4,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
-using TestDrivenDevelopmentApp.Core.Services;
 using TestDrivenDevelopmentApp.DataAccess;
 using TestDrivenDevelopmentApp.Services;
 
@@ -38,11 +37,17 @@ app.Run();
 
 void ConfigureServices(IServiceCollection services) {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    services.AddHttpClient<AuthClient>(client =>
+    {
+        client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("authmanagement_url"));
+    }).ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+    }); ;
     services.AddAutoMapper(Assembly.GetExecutingAssembly());
     services.AddDbContext<MainDbContext>(options => options.UseSqlServer(connectionString));
     services.AddTransient<IBookService, BookService>();
     services.AddTransient<IBookDal, EfBookDal>();
-    services.AddSingleton<ITokenService, TokenService>();
 }
 
 void ConfigureSwagger()

@@ -1,4 +1,4 @@
-﻿namespace TestDrivenDevelopmentApp.Core.Services
+﻿namespace AuthManagement.Services
 {
     public interface ITokenService
     {

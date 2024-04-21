@@ -1,10 +1,10 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using System.Text;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 
-namespace TestDrivenDevelopmentApp.Core.Services
+namespace AuthManagement.Services
 {
-    public class TokenService: ITokenService
+    public class TokenService : ITokenService
     {
         private readonly IConfiguration _configuration;
 
