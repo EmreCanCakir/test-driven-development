@@ -19,7 +19,7 @@ namespace AuthManagement.Controllers
         {
             if (userLogin.UserName == "test" && userLogin.Password == "test")
             {
-                var token = _tokenService.GenerateJwtToken();
+                var token = _tokenService.GenerateJwtToken(userLogin.UserName, userLogin.Password);
                 return Ok(new { Token = token });
             }
             return Unauthorized("Invalid credentials");
