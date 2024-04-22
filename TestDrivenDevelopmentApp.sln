@@ -11,7 +11,7 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthManagement", "AuthManagement\AuthManagement.csproj", "{084FAE87-6BC8-4010-9BF6-E72E8F1DAD7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "..\Contracts\Contracts.csproj", "{03A79F91-13F7-4EDF-B947-A16120A19333}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{03A79F91-13F7-4EDF-B947-A16120A19333}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
