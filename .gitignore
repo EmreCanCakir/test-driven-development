@@ -98,6 +98,26 @@ StyleCopReport.xml
 *.svclog
 *.scc
 
+# rabbitmq
+*.dets
+*.jmconfig
+*.wal
+*.queue_name
+*.dot
+*.rdq
+*.rds
+*.ets
+*.jif
+*.vshost
+*.idx
+*.DCL
+*.DCD
+.erlang.cookie
+*rabbit_serial
+nodes_running_at_sutdown
+*.vhost
+rabbit@rabbitmq*
+
 # Chutzpah Test files
 _Chutzpah*
 

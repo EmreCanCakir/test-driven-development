@@ -1,9 +1,12 @@
+using Contracts;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
+using TestDrivenDevelopmentApp.Consumer;
 using TestDrivenDevelopmentApp.DataAccess;
 using TestDrivenDevelopmentApp.Services;
 
@@ -16,6 +19,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 ConfigureSwagger();
+ConfigureRabbitMQ();
 
 var app = builder.Build();
 app.Services.CreateScope().ServiceProvider.GetRequiredService<MainDbContext>().Database.Migrate();
@@ -43,7 +47,7 @@ void ConfigureServices(IServiceCollection services) {
     }).ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler
     {
         ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
-    }); ;
+    });
     services.AddAutoMapper(Assembly.GetExecutingAssembly());
     services.AddDbContext<MainDbContext>(options => options.UseSqlServer(connectionString));
     services.AddTransient<IBookService, BookService>();
@@ -97,5 +101,25 @@ void ConfigureSwagger()
             ValidateAudience = false
         };
         // Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MTMzNDUyNTIsImV4cCI6MTc0NDg4MTI1MiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.s39nTIPIrPf4FNNRBeoAwhfk1kVNK1SQbr13TEIKMlY
+    });
+}
+
+void ConfigureRabbitMQ()
+{
+    builder.Services.AddMassTransit(busConfigurator =>
+    {
+        busConfigurator.SetKebabCaseEndpointNameFormatter();
+        busConfigurator.AddConsumer<AuthTokenGeneratedConsumer>();
+
+        busConfigurator.UsingRabbitMq((context, cfg) =>
+        {
+            cfg.Host(new Uri(builder.Configuration["MessageBroker:Host"]!), h =>
+            {
+                h.Username(builder.Configuration["MessageBroker:Username"]);
+                h.Password(builder.Configuration["MessageBroker:Password"]);
+            });
+
+            cfg.ConfigureEndpoints(context);
+        });
     });
 }

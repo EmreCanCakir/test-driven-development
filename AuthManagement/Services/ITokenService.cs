@@ -1,7 +1,9 @@
-﻿namespace AuthManagement.Services
+﻿using AuthManagement.Models;
+
+namespace AuthManagement.Services
 {
     public interface ITokenService
     {
-        string GenerateJwtToken();
+        string GenerateJwtToken(String userName, String password);
     }
 }

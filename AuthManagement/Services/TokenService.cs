@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using AuthManagement.Models;
 
 namespace AuthManagement.Services
 {
@@ -13,8 +14,12 @@ namespace AuthManagement.Services
             _configuration = configuration;
         }
 
-        public string GenerateJwtToken()
+        public string GenerateJwtToken(String userName, String password)
         {
+            if (userName != "test" || password != "test")
+            {
+                return "Invalid credentials";
+            }
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
