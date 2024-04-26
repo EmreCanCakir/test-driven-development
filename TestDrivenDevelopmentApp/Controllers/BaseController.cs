@@ -21,7 +21,7 @@ namespace TestDrivenDevelopmentApp.Controllers
         [Authorize]
         public async Task<IActionResult> GetAll()
         {
-            var entities = _service.GetAll();
+            var entities = await _service.GetAll();
             if (!entities.Any())
             {
                 return BadRequest();

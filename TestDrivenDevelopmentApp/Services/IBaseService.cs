@@ -5,6 +5,6 @@ namespace TestDrivenDevelopmentApp.Services
 {
     public interface IBaseService<T> where T : class, IEntity, new()
     {
-        List<T> GetAll();
+        Task<List<T>> GetAll();
     }
 }
