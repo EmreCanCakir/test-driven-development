@@ -46,7 +46,10 @@ namespace TestDrivenDevelopmentApp.Core.Cache
         public async Task SetAsync<T>(string key, T value, CancellationToken cancellation = default)
         {
             string cacheValue = JsonConvert.SerializeObject(value);
-            await _distributedCache.SetStringAsync(key, cacheValue, cancellation);
+            await _distributedCache.SetStringAsync(key, cacheValue, new DistributedCacheEntryOptions
+            {
+                SlidingExpiration = TimeSpan.FromMinutes(60)
+            }, cancellation);
 
             CacheKeys.TryAdd(key, false);
         }
