@@ -20,7 +20,7 @@ namespace TestDrivenDevelopmentApp.Core.Cache
         public async Task<T?> GetAsync<T>(string key, CancellationToken cancellation = default) where T : class
         {
             string? cachedValue = await _distributedCache.GetStringAsync(key);
-            if (cachedValue is null)
+            if (string.IsNullOrEmpty(cachedValue) || cachedValue == "[]")
             {
                 return null;
             }

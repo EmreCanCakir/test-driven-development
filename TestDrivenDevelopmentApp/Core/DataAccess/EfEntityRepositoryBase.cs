@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using TestDrivenDevelopmentApp.Core.Entities;
+using TestDrivenDevelopmentApp.Model;
 
 namespace TestDrivenDevelopmentApp.Core.DataAccess
 {

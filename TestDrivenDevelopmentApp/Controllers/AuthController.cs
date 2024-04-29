@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
 using TestDrivenDevelopmentApp.Consumer;
 
 namespace TestDrivenDevelopmentApp.Controllers
@@ -10,12 +11,10 @@ namespace TestDrivenDevelopmentApp.Controllers
     public class AuthController: ControllerBase
     {
         private readonly IPublishEndpoint _publishEndpoint;
-        private readonly AuthTokenGeneratedConsumer _tokenGeneratedConsumer;
 
-        public AuthController(IPublishEndpoint publishEndpoint, AuthTokenGeneratedConsumer tokenGeneratedConsumer)
+        public AuthController(IPublishEndpoint publishEndpoint)
         {
             _publishEndpoint = publishEndpoint;
-            _tokenGeneratedConsumer = tokenGeneratedConsumer;
         }
 
         [HttpPost("login")]
@@ -26,7 +25,7 @@ namespace TestDrivenDevelopmentApp.Controllers
                 { 
                     UserName = userName, Password = password 
                 }, new CancellationToken());
-            var token = await _tokenGeneratedConsumer.GetToken();
+            var token = AuthTokenGeneratedConsumer.Token;
 
             return Ok(new { Token = token });
         }

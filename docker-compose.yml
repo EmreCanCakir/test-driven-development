@@ -14,6 +14,7 @@ services:
       - "8081:8081"
     depends_on:
       - db
+      - redis
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -45,3 +46,11 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: "rabbitmq"
       RABBITMQ_DEFAULT_PASS: "rabbitmq"
+  
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - ./.containers/redis/data:/data

@@ -5,18 +5,13 @@ namespace TestDrivenDevelopmentApp.Consumer
 {
     public sealed class AuthTokenGeneratedConsumer : IConsumer<AuthTokenGeneratedEvent>
     {
-        private readonly TaskCompletionSource<string> _tokenCompletionSource = new TaskCompletionSource<string>();
-
+        public static string Token = null;
         public Task Consume(ConsumeContext<AuthTokenGeneratedEvent> context)
         {
-            _tokenCompletionSource.TrySetResult(context.Message.Token);
-            Console.WriteLine($"Token generated: {context.Message.Token}");
+            var token = context.Message.Token;
+            Console.WriteLine($"Token generated: {token}");
+            Token = token;
             return Task.CompletedTask;
-        }
-
-        public Task<string> GetToken()
-        {
-            return _tokenCompletionSource.Task;
         }
     }
 }

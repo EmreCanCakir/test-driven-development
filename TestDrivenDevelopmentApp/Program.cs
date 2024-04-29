@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
 using TestDrivenDevelopmentApp.Consumer;
+using TestDrivenDevelopmentApp.Core.Cache;
 using TestDrivenDevelopmentApp.DataAccess;
 using TestDrivenDevelopmentApp.Services;
 
@@ -20,6 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 ConfigureSwagger();
 ConfigureRabbitMQ();
+ConfigureRedis();
 
 var app = builder.Build();
 app.Services.CreateScope().ServiceProvider.GetRequiredService<MainDbContext>().Database.Migrate();
@@ -52,6 +54,7 @@ void ConfigureServices(IServiceCollection services) {
     services.AddDbContext<MainDbContext>(options => options.UseSqlServer(connectionString));
     services.AddTransient<IBookService, BookService>();
     services.AddTransient<IBookDal, EfBookDal>();
+    services.AddSingleton<ICacheService, CacheService>();
 }
 
 void ConfigureSwagger()
@@ -121,5 +124,14 @@ void ConfigureRabbitMQ()
 
             cfg.ConfigureEndpoints(context);
         });
+    });
+}
+
+void ConfigureRedis()
+{
+    string connectionString = builder.Configuration.GetConnectionString("Redis");
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = connectionString;
     });
 }
