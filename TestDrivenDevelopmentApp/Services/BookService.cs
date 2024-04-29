@@ -29,7 +29,7 @@ namespace TestDrivenDevelopmentApp.Services
             }
 
             books = _bookDal.GetAll();
-            _cacheService.SetAsync("books", books);
+            await _cacheService.SetAsync("books", books);
             return _autoMapper.Map<List<BookDto>>(books);
         }
     }
