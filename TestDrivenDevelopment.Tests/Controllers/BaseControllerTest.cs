@@ -16,10 +16,10 @@ namespace TestDrivenDevelopment.Tests.Controllers
             // Arrange
             var mockService = new Mock<IBookService>();
             mockService.Setup(x => x.GetAll())
-                .Returns(new List<BookDto>()
+                .Returns(Task.FromResult(new List<BookDto>()
                 {
                     new BookDto { Title = "Book1", AuthorName = "Author1", Year = 2020 },
-                });
+                }));
 
             var underTest = new BaseController<BookDto, IBookService>(mockService.Object);
 
@@ -35,10 +35,10 @@ namespace TestDrivenDevelopment.Tests.Controllers
         {
             var mockService = new Mock<IBookService>();
             mockService.Setup(x => x.GetAll())
-                .Returns(new List<BookDto>()
+                .Returns(Task.FromResult(new List<BookDto>()
                 {
                     new BookDto { Title = "Book1", AuthorName = "Author1", Year = 2020 },
-                });
+                }));
 
             var underTest = new BaseController<BookDto, IBookService>(mockService.Object);
 
@@ -52,10 +52,10 @@ namespace TestDrivenDevelopment.Tests.Controllers
         {
             var mockService = new Mock<IBookService>();
             mockService.Setup(x => x.GetAll())
-                .Returns(new List<BookDto>()
+                .Returns(Task.FromResult(new List<BookDto>()
                 {
                     new BookDto { Title = "Book1", AuthorName = "Author1", Year = 2020 },
-                });
+                }));
 
             var underTest = new BaseController<BookDto, IBookService>(mockService.Object);
             var result = await underTest.GetAll();
@@ -70,7 +70,7 @@ namespace TestDrivenDevelopment.Tests.Controllers
         {
             var mockService = new Mock<IBookService>();
             mockService.Setup(x => x.GetAll())
-                .Returns(new List<BookDto>());
+                .Returns(Task.FromResult(new List<BookDto>()));
 
             var underTest = new BaseController<BookDto, IBookService>(mockService.Object);
             var result = await underTest.GetAll();
